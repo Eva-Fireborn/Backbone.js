@@ -1,0 +1,77 @@
+
+.blue{
+    background-color: lightblue;
+}
+#TabsList{
+    list-style-type: none;
+}
+#TabsList > li {
+    display: inline;
+    padding-right: 50px;
+    padding-left: 50px;
+    text-align: center;
+}
+#TabsList > li:hover {
+    cursor: pointer;
+    background-color: black;
+    color: white;
+}
+
+.presentation {
+    height: 250px;
+}
+.presentation > p {
+    width: 50%;
+    float: left;
+    margin: 10px;
+}
+.presentation > img{
+    float: left;
+}
+#historyPic{
+    height: 200px;
+    float: right;
+}
+.home{
+    height: 450px;
+    width: 900px;
+    background-color: blueviolet;
+}
+.home > h2 {
+    text-align: center;
+}
+.home > p {
+    float: right;
+    margin: 10px;
+    width: 400px;
+}
+#finrobotPic1{
+    height: 300px;
+    float: left;
+}
+#finrobotPic2{
+    height: 200px;
+    float: left;
+}
+#minirobotPic1{
+    height: 200px;
+    float: left;
+}
+#minirobotPic2{
+    height: 200px;
+    float: left;
+}
+
+.minirobot{
+    background-color: pink;
+    height: 450px;
+    width: 900px;
+}
+.minirobot > p{
+    float: right;
+    margin: 10px;
+    width: 400px;
+}
+.minirobot > h2{
+    text-align: center;
+}
