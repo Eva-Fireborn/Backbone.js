@@ -1,9 +1,29 @@
+.grid-container {
+    display: grid;
+    grid-template-columns: auto, auto;
+    grid-template-rows: auto, auto, auto;
+  }
+.logInRuta{
+    float: right;
+    margin-right: 100px;
+    font-family: 'Ubuntu', sans-serif;
+}
+#headerName{
+    float: left;
+    font-family: 'VT323', monospace;
+    margin-left: 20px;
+    font-size: 50px;
 
-.blue{
-    background-color: lightblue;
+}
+.login{
+    width: 100%;
+    height: 100px;
+    grid-column: 1/3;
+    grid-row: 1;
 }
 #TabsList{
     list-style-type: none;
+    font-family: 'Ubuntu', sans-serif;
 }
 #TabsList > li {
     display: inline;
@@ -16,35 +36,30 @@
     background-color: black;
     color: white;
 }
-
 .presentation {
-    height: 250px;
+    height: 300px;
+    font-family: 'Ubuntu', sans-serif;
+    grid-column: 1/3;
+    grid-row: 2;
+}
+.presentation > h1{
+    margin-left: 20px;
 }
 .presentation > p {
     width: 50%;
     float: left;
-    margin: 10px;
+    margin-left: 20px;
 }
-.presentation > img{
-    float: left;
+.tabContainer {
+    grid-column: 1;
+    grid-row: 3;
 }
 #historyPic{
     height: 200px;
-    float: right;
+    float: left;
+    margin-left: 20px;
 }
-.home{
-    height: 450px;
-    width: 900px;
-    background-color: blueviolet;
-}
-.home > h2 {
-    text-align: center;
-}
-.home > p {
-    float: right;
-    margin: 10px;
-    width: 400px;
-}
+
 #finrobotPic1{
     height: 300px;
     float: left;
@@ -61,17 +76,7 @@
     height: 200px;
     float: left;
 }
-
-.minirobot{
-    background-color: pink;
-    height: 450px;
-    width: 900px;
-}
-.minirobot > p{
-    float: right;
-    margin: 10px;
-    width: 400px;
-}
-.minirobot > h2{
-    text-align: center;
+.items{
+    grid-column: 2;
+    grid-row: 3;
 }

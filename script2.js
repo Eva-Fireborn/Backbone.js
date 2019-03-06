@@ -1,121 +1,86 @@
-const Tabs = Backbone.Model.extend({
+const tabModelList = ['firstTab', 'secondTab', 'thirdTab'];
+const tabContent = [
+    '<h2>Finrobot</h2><p>Vår finrobot passar för alla tillfällen. Finns i färgerna guld och silver. Höjd: 175 cm.',
+    '<h2>Minirobot</h2><p>Vår minirobot passar i fickan och fungerar även som mobiltelefon. Finns i färgerna svart och vit. Höjd: 18 cm.',
+    '<h2>Djurrobot</h2><p>Vår djurrobot passar i fickan och fungerar även som mobiltelefon. Finns i färgerna svart och vit. Höjd: 18 cm.'  
+];
+const firstPicture = [
+    '<img src="pics/Daft-Punk-Large.jpg" id="finrobotPic1" alt="Finrobot helbild"/>',
+    '<img src="pics/minirob.jpg" id="minirobotPic1" alt="Pocketrobot helbild"/>',
+    '<img src="pics/minirob.jpg" id="minirobotPic1" alt="Pocketrobot helbild"/>'
+];
+const secondPicture = [
+    '<img src="pics/daftpunk_3346867b.jpg" id="finrobotPic2" alt="Finrobot närbild"/>',
+    '<img src="pics/minirob2.jpg" id="minirobotPic2" alt="Pocketrobot närbild"/>',
+    '<img src="pics/minirob2.jpg" id="minirobotPic2" alt="Pocketrobot närbild"/>'
+];
+
+const TabModel = Backbone.Model.extend({
     defaults:{
-        tab1: true,
-        tab2: false,
-        tab3: false,
-        switchPic: false
-    },
-    tab1: function(){
-        this.set({tab1: true});
-        this.set({tab2: false});
-        this.set({tab3: false});
-    },
-    tab2: function(){
-        this.set({tab1: false});
-        this.set({tab2: true});
-        this.set({tab3: false});
-    },
-    tab3: function(){
-        this.set({tab1: false});
-        this.set({tab2: false});
-        this.set({tab3: true});
+        index: 0,
+        pictureOne: true
     },
     nextButton: function(){
-        let tab1 = this.get('tab1');
-        let tab2 = this.get('tab2');
-        if (tab1){
-            this.tab2();
-        } else if(tab2) {
-            this.tab3();
+        let newIndex = this.get('index');
+        if(newIndex === tabModelList.length -1){
+            this.set({index: 0});
         } else {
-            this.tab1();
-        }    
-    },
-    backButton: function(){
-        let tab1 = this.get('tab1');
-        let tab2 = this.get('tab2');
-        if (tab1){
-            this.tab3();
-        } else if(tab2) {
-            this.tab1();
-        } else {
-            this.tab2();
+            newIndex++;
+            this.set({index: newIndex});
         }
     },
-    switch: function(){
-        let pic = this.get('switchPic');
-        if (pic){
-            this.set({switchPic: false});
+    backButton: function(){
+        let newIndex = this.get('index');
+        let tabLength = tabModelList.length -1;
+        if(newIndex <= 0){
+            this.set({index: tabLength});
         } else {
-            this.set({switchPic: true});
+            newIndex--;
+            this.set({index: newIndex});
+        }
+    },
+    switchTab: function (event){
+        let newTab = event.target.id;
+        this.set({index: newTab});
+    },
+    switchPicture: function(){
+        let value = this.get('pictureOne');
+        if (value) {
+            this.set({pictureOne: false});
+        } else {
+            this.set({pictureOne: true});
         }
     }
 });
+let tabModel = new TabModel({});
 
-let tabs = new Tabs({});
-
-const HomeView = Backbone.View.extend({
+const TabView = Backbone.View.extend({
     initialize: function(){
         this.listenTo(this.model, 'change', this.render)
     },
     render: function(){
-        let tab1 = this.model.get('tab1');
-        let tab2 = this.model.get('tab2');
-        let menu = `<ul id="TabsList"><li id="homeTab"> Finrobot </li> <li id="miniRobotTab"> Minirobot </li> <li id="blueTab"> Blå </li></ul>`;
-        let menuButtons = `<button id="backButton">Föregående</button> <button id="nextButton">Nästa</button>`
-        
         let html;
-        if (tab1){
-            let finrobotPic1 = `<img src="pics/Daft-Punk-Large.jpg" id="finrobotPic1" alt="Finrobot helbild"/>`;
-            let finrobotPic2 = `<img src="pics/daftpunk_3346867b.jpg" id="finrobotPic2" alt="Finrobot närbild"/>`;
-            let picButtons = `<button id="pastPic"><=</button> <button id="nextPic">=></button>`;
-            let pic = this.model.get('switchPic');
-            if (pic){
-                html = `<div class="home">${menu}${menuButtons}<h2>Finrobot</h2>${finrobotPic1}${picButtons}<p>Vår finrobot passar för alla tillfällen.
-                Finns i färgerna guld och silver. Höjd: 175 cm.</div>`;
-            } else {
-                html = `<div class="home">${menu}${menuButtons}<h2>Finrobot</h2>${finrobotPic2}${picButtons}<p>Vår finrobot passar för alla tillfällen.
-                Finns i färgerna guld och silver. Höjd: 175 cm.</div>`;
-            }
-            
-            this.$el.html(html);
-        }
-        else if(tab2){
-            let minirobotPic1 = `<img src="pics/minirob.jpg" id="minirobotPic1" alt="Pocketrobot helbild"/>`;
-            let minirobotPic2 = `<img src="pics/minirob2.jpg" id="minirobotPic2" alt="Pocketrobot närbild"/>`;
-            let picButtons = `<button id="pastPic"><=</button> <button id="nextPic">=></button>`;
-            let pic = this.model.get('switchPic');
-            if (pic) {
-                html = `<div class="minirobot">${menu}${menuButtons}<h2>Minirobot</h2>${minirobotPic1}${picButtons}<p>Vår minirobot passar i fickan och
-                fungerar även som mobiltelefon. Finns i färgerna svart och vit. Höjd: 18 cm.</div>`;
-            } else {
-                html = `<div class="minirobot">${menu}${menuButtons}<h2>Minirobot</h2>${minirobotPic2}${picButtons}<p>Vår minirobot passar i fickan och
-                fungerar även som mobiltelefon. Finns i färgerna svart och vit. Höjd: 18 cm.</div>`;
-            }
-            
-            this.$el.html(html);
+        let index = this.model.get('index');
+        let pictureOne = this.model.get('pictureOne');
+        let menu = `<ul id="TabsList"><li id="0"> Finrobot </li> <li id="1"> Minirobot </li> <li id="2"> Djurrobot </li></ul>`;
+        let menuButtons = `<button id="backButton">Föregående</button> <button id="nextButton">Nästa</button>`
+        let picButtons = `<button id="pastPic"><=</button> <button id="nextPic">=></button>`;
+        if (pictureOne){
+            html = `${menu}${menuButtons}${tabContent[index]}${firstPicture[index]}${picButtons}`;
         } else {
-            html = `<div class="blue">${menu}${menuButtons}<h2>Blå</h2></div>`;
-            this.$el.html(html);
+            html = `${menu}${menuButtons}${tabContent[index]}${secondPicture[index]}${picButtons}`;
         }
+        this.$el.html(html);
     },
-    events:{
-        "click #homeTab": 'tab1',
-        "click #miniRobotTab": 'tab2',
-        "click #blueTab": 'tab3',
+    events: {
+        "click #TabsList": 'switchTab',
         "click #nextButton": 'nextButton',
         "click #backButton": 'backButton',
-        "click #pastPic": 'switch',
-        "click #nextPic": 'switch'
+        "click #pastPic": 'switchPicture',
+        "click #nextPic": 'switchPicture'
     },
-    tab1: function(){
-        this.model.tab1();
-    },
-    tab2: function(){
-        this.model.tab2();
-    },
-    tab3: function(){
-        this.model.tab3();
+    switchTab: function(event){
+        this.model.switchTab(event);
     },
     nextButton: function(){
         this.model.nextButton();
@@ -123,17 +88,18 @@ const HomeView = Backbone.View.extend({
     backButton: function(){
         this.model.backButton();
     },
-    switch: function(){
-        this.model.switch();
-    }
+    switchPicture: function(){
+        this.model.switchPicture();
+    }    
 });
 
 
 $(document).ready(function(){
-    let homeView = new HomeView({
-        model: tabs,
-        el: '.content'
+
+    let tabView = new TabView({
+        model: tabModel,
+        el: '.tabContainer'
     });
-    homeView.render();
+    tabView.render();
 
 });

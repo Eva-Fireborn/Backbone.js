@@ -17,11 +17,11 @@ const UserView = Backbone.View.extend ({
         let loginForm = `<input type="text" id="loginForm" placeholder="Användarnamn">`;
         let loginButton = `<button id="loginButton">Logga in</button>`;
         let logOutButton = `<button id="logOffButton">Logga ut</button>`
-        let content;
+        let content = `<h1 id="headerName">Robotar i frack och andra robotar.se</h1>`;
         if (loggedIn){
-            content= `<p>Välkommen ${userName}!</p>${logOutButton}`;
+            content+= `<div class="logInRuta"><p>Välkommen ${userName}!</p>${logOutButton}</div>`;
         } else {
-            content=`<p>Logga in</p>${loginForm}${loginButton}`;
+            content+=`<div class="logInRuta"><p>Logga in</p>${loginForm}${loginButton}</div>`;
         }
         this.$el.html(content);
     },
