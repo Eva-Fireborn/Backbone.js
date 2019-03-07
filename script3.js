@@ -36,12 +36,19 @@ const BasketItemView = Backbone.View.extend ({
         <option value="svart">svart</option>
         <option value="vit">vit</option>
         </select>`;
+        let colorSelectDjurrobot = `<select id="selectColor">
+        <option value="svart">svart</option>
+        <option value="gul">gul</option>
+        <option value="brun">brun</option>
+        </select>`;
         let html;
         if (editMode){
             if (item === 'Finrobot'){
                 html = `${item}, ${colorSelectFinrobot}, ${quantity} st, ${price} kr ${okButton}${removeButton}`
-            } else {
+            } else if (item === 'Minirobot'){
                 html = `${item}, ${colorSelectMinirobot}, ${quantity} st, ${price} kr ${okButton}${removeButton}`
+            } else {
+                html = `${item}, ${colorSelectDjurrobot}, ${quantity} st, ${price} kr ${okButton}${removeButton}`
             }
             
         } else{
@@ -74,11 +81,14 @@ const BasketAllView = Backbone.View.extend({
     render: function() {
         let el = this.$el;
         el.html('');
-        let robots = `<ul>
-        <li>Finrobot, guld <button id="finrobotGuld">Lägg i varukorgen</button></li>
-        <li>Finrobot, silver <button id="finrobotSilver">Lägg i varukorgen</button></li>
-        <li>Minirobot, svart <button id="minirobotSvart">Lägg i varukorgen</button></li>
-        <li>Minirobot, vit <button id="minirobotVit">Lägg i varukorgen</button></li>
+        let robots = `<ul id="listOfItems">
+        <li>Finrobot, guld, 18.000 kr <button id="finrobotGuld">Lägg i varukorgen</button></li>
+        <li>Finrobot, silver, 15.000 kr <button id="finrobotSilver">Lägg i varukorgen</button></li>
+        <li>Minirobot, svart, 8.000 kr <button id="minirobotSvart">Lägg i varukorgen</button></li>
+        <li>Minirobot, vit, 8.500 kr <button id="minirobotVit">Lägg i varukorgen</button></li>
+        <li>Djurrobot, svart, 10.999 kr <button id="djurrobotSvart">Lägg i varukorgen</button></li>
+        <li>Djurrobot, gul, 10.999 kr <button id="djurrobotGul">Lägg i varukorgen</button></li>
+        <li>Djurrobot, brun, 10.999 kr <button id="djurrobotBrun">Lägg i varukorgen</button></li>
         </ul>
         <h3>Varukorg</h3>`;
         el.append(robots);
@@ -92,7 +102,10 @@ const BasketAllView = Backbone.View.extend({
         "click #finrobotSilver": 'finrobotSilver',
         "click #finrobotGuld": 'finrobotGuld',
         "click #minirobotSvart": 'minirobotSvart',
-        "click #minirobotVit": 'minirobotVit'
+        "click #minirobotVit": 'minirobotVit',
+        "click #djurrobotSvart": 'djurrobotSvart',
+        "click #djurrobotGul": 'djurrobotGul',
+        "click #djurrobotBrun": 'djurrobotBrun'
     },
     finrobotSilver: function(event){
         let quantity = 1;
@@ -169,13 +182,70 @@ const BasketAllView = Backbone.View.extend({
             basketCollection.remove(listItem)
         }
         basketCollection.add({item: 'Minirobot', color: 'vit', price: price, quantity: quantity});
-    }
+    },
+    djurrobotSvart:function(event){
+        let quantity = 1;
+        let price = 10999;
+        let listItem = '';
+        this.collection.forEach(function(item){
+            let name = item.attributes.item;
+            let color = item.attributes.color;
+            if ( name === 'Djurrobot' && color === 'svart'){
+                quantity = item.attributes.quantity;
+                quantity++;
+                price = quantity * price;
+                listItem = item;  
+            }    
+        });
+        if (listItem !== ''){
+            basketCollection.remove(listItem)
+        }
+        basketCollection.add({item: 'Djurrobot', color: 'svart', price: price, quantity: quantity});
+    },
+    djurrobotGul:function(event){
+        let quantity = 1;
+        let price = 10999;
+        let listItem = '';
+        this.collection.forEach(function(item){
+            let name = item.attributes.item;
+            let color = item.attributes.color;
+            if ( name === 'Djurrobot' && color === 'gul'){
+                quantity = item.attributes.quantity;
+                quantity++;
+                price = quantity * price;
+                listItem = item;  
+            }    
+        });
+        if (listItem !== ''){
+            basketCollection.remove(listItem)
+        }
+        basketCollection.add({item: 'Djurrobot', color: 'gul', price: price, quantity: quantity});
+    },
+    djurrobotBrun:function(event){
+        let quantity = 1;
+        let price = 10999;
+        let listItem = '';
+        this.collection.forEach(function(item){
+            let name = item.attributes.item;
+            let color = item.attributes.color;
+            if ( name === 'Djurrobot' && color === 'brun'){
+                quantity = item.attributes.quantity;
+                quantity++;
+                price = quantity * price;
+                listItem = item;  
+            }    
+        });
+        if (listItem !== ''){
+            basketCollection.remove(listItem)
+        }
+        basketCollection.add({item: 'Djurrobot', color: 'brun', price: price, quantity: quantity});
+    },
 });
 
 $(document).ready(function(){
     let basketAllView = new BasketAllView({
         collection: basketCollection,
-        el: '#listOfItems'
+        el: '.items'
     });
     basketAllView.render();
 

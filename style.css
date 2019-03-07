@@ -36,6 +36,10 @@
     background-color: black;
     color: white;
 }
+.displayedTab {
+    background-color: black;
+    color: white;
+}
 .presentation {
     height: 300px;
     font-family: 'Ubuntu', sans-serif;
@@ -50,33 +54,72 @@
     float: left;
     margin-left: 20px;
 }
-.tabContainer {
+.tabMenu{
     grid-column: 1;
     grid-row: 3;
 }
+.tabContainer {
+    margin-top: 100px;
+    height: 500px;
+    width: 600px;
+    grid-column: 1;
+    grid-row: 3;
+    text-align: center;
+}
+
 #historyPic{
     height: 200px;
     float: left;
     margin-left: 20px;
 }
-
 #finrobotPic1{
     height: 300px;
-    float: left;
+    margin-left: auto;
+    margin-right: auto;
 }
 #finrobotPic2{
     height: 200px;
-    float: left;
+    margin-left: auto;
+    margin-right: auto;
 }
 #minirobotPic1{
     height: 200px;
-    float: left;
+    margin-left: auto;
+    margin-right: auto;
 }
 #minirobotPic2{
     height: 200px;
-    float: left;
+    margin-left: auto;
+    margin-right: auto;
+}
+#hundrobotPic1{
+    height: 200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+#hundrobotPic2{
+    height: 200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+#pastPic {
+    position: relative;
+    bottom: 150px;
+    left: 280px;
+}
+#nextPic {
+    position: relative;
+    bottom: 150px;
+    left: 290px;
 }
 .items{
     grid-column: 2;
     grid-row: 3;
+}
+#listOfItems {
+    list-style-type: none;
+    font-family: 'Ubuntu', sans-serif;
+}
+.items > ul > li {
+    margin-top: 10px;
 }
